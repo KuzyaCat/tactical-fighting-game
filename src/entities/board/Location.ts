@@ -149,4 +149,37 @@ export class Location {
 
     return null;
   }
+
+  getAllEnemiesLocation(unitBoardLocation: boardLocation): boardLocation[] {
+    const matrix = this.board.getBoardMatrix();
+    const teamOfUnit: Team = this.getTeamOfUnit(unitBoardLocation);
+    const rowsHalfIndex = Math.floor(matrix.length / 2);
+    const enemiesUnitsLocation = [];
+
+    if (teamOfUnit === Team.bottomTeam) {
+      for (let i = rowsHalfIndex - 1; i >= 0; i -= 1) {
+        for (let j = 0; j < matrix[i].length; j += 1) {
+          if (matrix[i][j]) {
+            const enemyBoardLocation = this.getUnitBoardLocation(matrix[i][j] as Unit);
+            if (enemyBoardLocation) {
+              enemiesUnitsLocation.push(enemyBoardLocation);
+            }
+          }
+        }
+      }
+    } else {
+      for (let i = rowsHalfIndex; i < matrix.length; i += 1) {
+        for (let j = 0; j < matrix[i].length; j += 1) {
+          if (matrix[i][j]) {
+            const enemyBoardLocation = this.getUnitBoardLocation(matrix[i][j] as Unit);
+            if (enemyBoardLocation) {
+              enemiesUnitsLocation.push(enemyBoardLocation);
+            }
+          }
+        }
+      }
+    }
+
+    return enemiesUnitsLocation;
+  }
 }

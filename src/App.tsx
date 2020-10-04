@@ -5,7 +5,7 @@ import { Game } from './entities/Game';
 import { ROWS_COUNT, COLUMNS_COUNT } from './helpers/constants';
 
 function App() {
-  const adjacentEnemiesLocation: string = Game.case2(ROWS_COUNT, COLUMNS_COUNT);
+  const adjacentEnemiesLocation: string = Game.case4(ROWS_COUNT, COLUMNS_COUNT);
 
   return (
     <div className="App">
