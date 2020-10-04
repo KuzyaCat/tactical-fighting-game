@@ -1,13 +1,33 @@
-import { unitType } from '../types';
+import { IAttackRange } from './types/IAttackRange';
+import { boardLocation } from '../types';
+import { Location } from '../board';
 
 export class Unit {
-  hp: number;
-  initiative: number;
-  type: unitType;
+  private name: string;
+  private hp: number;
+  private initiative: number;
+  private attackRangeType: IAttackRange;
 
-  constructor(hp: number, initiative: number, type: unitType) {
+  constructor(name: string, hp: number, initiative: number, attackRangeType: IAttackRange) {
     this.hp = hp;
     this.initiative = initiative;
-    this.type = type;
+    this.name = name;
+    this.attackRangeType = attackRangeType;
+  }
+
+  getPossibleAims(boardLocation: boardLocation, location: Location): boardLocation[] | null {
+    return this.attackRangeType.getPossibleAims(boardLocation, location);
+  }
+
+  getName(): string {
+    return this.name;
+  }
+
+  getHp(): number {
+    return this.hp;
+  }
+
+  getInitiative(): number {
+    return this.initiative;
   }
 }
