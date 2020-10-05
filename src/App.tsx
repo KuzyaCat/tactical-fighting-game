@@ -5,7 +5,7 @@ import { Game } from './entities/Game';
 import { ROWS_COUNT, COLUMNS_COUNT } from './helpers/constants';
 
 function App() {
-  const keis: string = Game.case9(ROWS_COUNT, COLUMNS_COUNT);
+  const keis: string = Game.case1(ROWS_COUNT, COLUMNS_COUNT);
 
   return (
     <div className="App">
