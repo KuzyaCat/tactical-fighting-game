@@ -7,6 +7,7 @@ import { Location } from '../board';
 export class Unit {
   private name: string;
   private hp: number;
+  private maxHp: number;
   private initiative: number;
   private dealValue: number;
   private AttackRangeType: IAttackRange;
@@ -23,6 +24,7 @@ export class Unit {
     DealerType: IDealerType,
   ) {
     this.hp = hp;
+    this.maxHp = hp;
     this.initiative = initiative;
     this.name = name;
     this.dealValue = dealValue;
@@ -59,6 +61,10 @@ export class Unit {
     return this.hp;
   }
 
+  getMaxHp(): number {
+    return this.maxHp;
+  }
+
   getDealValue(): number {
     return this.dealValue;
   }
@@ -69,6 +75,10 @@ export class Unit {
 
   getDealCount(): IDealCount {
     return this.DealCount;
+  }
+
+  getDealerType(): IDealerType {
+    return this.DealerType;
   }
 
   setHp(value: number): void {

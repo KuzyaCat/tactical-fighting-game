@@ -149,13 +149,18 @@ export class Location {
     return null;
   }
 
-  getAllEnemiesLocation(unitBoardLocation: boardLocation): boardLocation[] {
+  private switchTeam(team: Team) {
+    return team === Team.bottomTeam ? Team.topTeam : Team.bottomTeam;
+  }
+
+  private getAllTeamUnits(unitBoardLocation: boardLocation, allies = false): boardLocation[] {
     const matrix = this.board.getBoardMatrix();
     const teamOfUnit: Team = this.getTeamOfUnit(unitBoardLocation);
+    const consideringTeam = allies ? this.switchTeam(teamOfUnit) : teamOfUnit;
     const rowsHalfIndex = Math.floor(matrix.length / 2);
     const enemiesUnitsLocation = [];
 
-    if (teamOfUnit === Team.bottomTeam) {
+    if (consideringTeam === Team.bottomTeam) {
       for (let i = rowsHalfIndex - 1; i >= 0; i -= 1) {
         for (let j = 0; j < matrix[i].length; j += 1) {
           if (matrix[i][j]) {
@@ -180,5 +185,13 @@ export class Location {
     }
 
     return enemiesUnitsLocation;
+  }
+
+  getAllEnemiesLocation(unitBoardLocation: boardLocation): boardLocation[] {
+    return this.getAllTeamUnits(unitBoardLocation);
+  }
+
+  getAllAlliesLocation(unitBoardLocation: boardLocation): boardLocation[] {
+    return this.getAllTeamUnits(unitBoardLocation, true);
   }
 }

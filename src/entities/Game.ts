@@ -3,7 +3,8 @@ import { Unit } from './units';
 import { Creep } from './units/Creep';
 import { RangeCreep } from './units/RangeCreep';
 import { Mage } from './units/Mage';
-import { boardLocation } from './types';
+import { Druid } from './units/Druid';
+import { boardLocation, unit } from './types';
 
 export class Game {
   static case1(rowsCount: number, columnsCount: number): string {
@@ -158,7 +159,7 @@ export class Game {
     const location: Location = new Location(board);
     const action: Action = new Action(location, board);
 
-    const units: (Unit | null)[][] = Array<Array<Unit>>(rowsCount);
+    const units: unit[][] = Array<Array<Unit>>(rowsCount);
     for (let i = 0; i < rowsCount; i += 1) {
       const unitsRow = Array<Unit>(columnsCount);
       if (i === 0) {
@@ -183,6 +184,51 @@ export class Game {
       action.deal(
         attacker as Unit,
         attacker.getPossibleTargets(location.getUnitBoardLocation(attacker) as boardLocation, location),
+      );
+    }
+    console.log(board.getBoardMatrix());
+
+    return JSON.stringify(board.getBoardMatrix());
+  }
+
+  static case7(rowsCount: number, columnsCount: number): string {
+    const board = new Board(rowsCount, columnsCount);
+    const location: Location = new Location(board);
+    const action: Action = new Action(location, board);
+
+    const units: unit[][] = Array<Array<Unit>>(rowsCount);
+    for (let i = 0; i < rowsCount; i += 1) {
+      const unitsRow = Array<Unit>(columnsCount);
+      if (i === 0) {
+        for (let j = 0; j < columnsCount; j += 1) {
+          unitsRow[j] = new RangeCreep('kek', 100, 20, 20);
+          units[i] = unitsRow;
+        }
+        continue;
+      }
+      for (let j = 0; j < columnsCount; j += 1) {
+        unitsRow[j] = new Creep('kek', 100, 20, 20);
+      }
+      units[i] = unitsRow;
+    }
+    units[0][2] = new Druid('kek', 100, 10, 10);
+    units[3][2] = new Mage('kek', 100, 40, 40);
+    units[2][2] = null;
+    board.fillWithUnits(units);
+
+    const attacker = units[3][2];
+    const healer = units[0][2];
+    console.log(board.getBoardMatrix());
+    if (attacker) {
+      action.deal(
+        attacker as Unit,
+        attacker.getPossibleTargets(location.getUnitBoardLocation(attacker) as boardLocation, location),
+      );
+    }
+    if (healer) {
+      action.deal(
+        healer as Unit,
+        healer.getPossibleTargets(location.getUnitBoardLocation(healer) as boardLocation, location),
       );
     }
     console.log(board.getBoardMatrix());

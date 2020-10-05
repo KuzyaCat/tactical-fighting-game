@@ -5,7 +5,7 @@ import { Game } from './entities/Game';
 import { ROWS_COUNT, COLUMNS_COUNT } from './helpers/constants';
 
 function App() {
-  const adjacentEnemiesLocation: string = Game.case6(ROWS_COUNT, COLUMNS_COUNT);
+  const keis: string = Game.case7(ROWS_COUNT, COLUMNS_COUNT);
 
   return (
     <div className="App">
@@ -13,7 +13,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
-          {adjacentEnemiesLocation}
+          {keis}
         </p>
         <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
           Learn React
