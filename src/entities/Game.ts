@@ -1,4 +1,4 @@
-import { Board, Location } from './board';
+import { Board, Location, Action } from './board';
 import { Unit } from './units';
 import { Creep } from './units/Creep';
 import { RangeCreep } from './units/RangeCreep';
@@ -13,7 +13,7 @@ export class Game {
     for (let i = 0; i < rowsCount; i += 1) {
       const unitsRow = Array<Unit>(columnsCount);
       for (let j = 0; j < columnsCount; j += 1) {
-        unitsRow[j] = new Creep('kek', 100, 20);
+        unitsRow[j] = new Creep('kek', 100, 20, 20);
       }
       units[i] = unitsRow;
     }
@@ -26,7 +26,7 @@ export class Game {
 
     const unit = location.getUnitByLocation(unitBoardLocation);
     if (unit) {
-      return JSON.stringify(unit.getPossibleAims(unitBoardLocation, location));
+      return JSON.stringify(unit.getPossibleTargets(unitBoardLocation, location));
     }
     return 'null';
   }
@@ -39,7 +39,7 @@ export class Game {
     for (let i = 0; i < rowsCount; i += 1) {
       const unitsRow = Array<Unit>(columnsCount);
       for (let j = 0; j < columnsCount; j += 1) {
-        unitsRow[j] = new Creep('kek', 100, 20);
+        unitsRow[j] = new Creep('kek', 100, 20, 20);
       }
       units[i] = unitsRow;
     }
@@ -54,7 +54,7 @@ export class Game {
 
     const unit = location.getUnitByLocation(unitBoardLocation);
     if (unit) {
-      return JSON.stringify(unit.getPossibleAims(unitBoardLocation, location));
+      return JSON.stringify(unit.getPossibleTargets(unitBoardLocation, location));
     }
     return 'null';
   }
@@ -67,7 +67,7 @@ export class Game {
     for (let i = 0; i < rowsCount; i += 1) {
       const unitsRow = Array<Unit>(columnsCount);
       for (let j = 0; j < columnsCount; j += 1) {
-        unitsRow[j] = new RangeCreep('kek', 100, 20);
+        unitsRow[j] = new RangeCreep('kek', 100, 20, 20);
       }
       units[i] = unitsRow;
     }
@@ -80,7 +80,7 @@ export class Game {
 
     const unit = location.getUnitByLocation(unitBoardLocation);
     if (unit) {
-      return JSON.stringify(unit.getPossibleAims(unitBoardLocation, location));
+      return JSON.stringify(unit.getPossibleTargets(unitBoardLocation, location));
     }
     return 'null';
   }
@@ -93,7 +93,7 @@ export class Game {
     for (let i = 0; i < rowsCount; i += 1) {
       const unitsRow = Array<Unit>(columnsCount);
       for (let j = 0; j < columnsCount; j += 1) {
-        unitsRow[j] = new RangeCreep('kek', 100, 20);
+        unitsRow[j] = new RangeCreep('kek', 100, 20, 20);
       }
       units[i] = unitsRow;
     }
@@ -111,8 +111,44 @@ export class Game {
 
     const unit = location.getUnitByLocation(unitBoardLocation);
     if (unit) {
-      return JSON.stringify(unit.getPossibleAims(unitBoardLocation, location));
+      return JSON.stringify(unit.getPossibleTargets(unitBoardLocation, location));
     }
     return 'null';
+  }
+
+  static case5(rowsCount: number, columnsCount: number): string {
+    const board = new Board(rowsCount, columnsCount);
+    const location: Location = new Location(board);
+    const action: Action = new Action(location, board);
+
+    const units: (Unit | null)[][] = Array<Array<Unit>>(rowsCount);
+    for (let i = 0; i < rowsCount; i += 1) {
+      const unitsRow = Array<Unit>(columnsCount);
+      if (i === 0) {
+        for (let j = 0; j < columnsCount; j += 1) {
+          unitsRow[j] = new RangeCreep('kek', 100, 20, 20);
+          units[i] = unitsRow;
+        }
+        continue;
+      }
+      for (let j = 0; j < columnsCount; j += 1) {
+        unitsRow[j] = new Creep('kek', 100, 20, 20);
+      }
+      units[i] = unitsRow;
+    }
+    board.fillWithUnits(units);
+
+    const enemyBoardLocation = {
+      rowIndex: 2,
+      columnIndex: 1,
+    };
+
+    console.log(board.getBoardMatrix());
+    for (let i = 0; i < 5; i += 1) {
+      action.deal(units[1][1] as Unit, [enemyBoardLocation]);
+    }
+    console.log(board.getBoardMatrix());
+
+    return JSON.stringify(board.getBoardMatrix());
   }
 }

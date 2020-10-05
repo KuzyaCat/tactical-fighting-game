@@ -140,7 +140,6 @@ export class Location {
       }
     } else {
       for (let i = rowsHalfIndex; i < matrix.length; i += 1) {
-        console.log(matrix[i], i);
         if (matrix[i].filter((u) => u).length) {
           return this.getRowEnemiesLocation(i).filter(this.removeDeadUnits);
         }

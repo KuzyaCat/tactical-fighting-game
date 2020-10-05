@@ -1,4 +1,6 @@
-import { IAttackRange } from './types/IAttackRange';
+import { IAttackRange } from './types/range-type/IAttackRange';
+import { IDealCount } from './types/deal-count/IDealCount';
+import { IDealerType } from './types/deal-type/IDealerType';
 import { boardLocation } from '../types';
 import { Location } from '../board';
 
@@ -6,17 +8,47 @@ export class Unit {
   private name: string;
   private hp: number;
   private initiative: number;
-  private attackRangeType: IAttackRange;
+  private dealValue: number;
+  private AttackRangeType: IAttackRange;
+  private DealCount: IDealCount;
+  private DealerType: IDealerType;
 
-  constructor(name: string, hp: number, initiative: number, attackRangeType: IAttackRange) {
+  constructor(
+    name: string,
+    hp: number,
+    initiative: number,
+    dealValue: number,
+    AttackRangeType: IAttackRange,
+    DealCount: IDealCount,
+    DealerType: IDealerType,
+  ) {
     this.hp = hp;
     this.initiative = initiative;
     this.name = name;
-    this.attackRangeType = attackRangeType;
+    this.dealValue = dealValue;
+    this.AttackRangeType = AttackRangeType;
+    this.DealCount = DealCount;
+    this.DealerType = DealerType;
   }
 
-  getPossibleAims(boardLocation: boardLocation, location: Location): boardLocation[] | null {
-    return this.attackRangeType.getPossibleAims(boardLocation, location);
+  getPossibleTargets(boardLocation: boardLocation, location: Location): boardLocation[] {
+    return this.AttackRangeType.getPossibleTargets(boardLocation, location);
+  }
+
+  getTargets(
+    boardLocation: boardLocation,
+    location: Location,
+    enemyBoardLocation: boardLocation | undefined,
+  ): boardLocation[] {
+    return this.DealCount.getTargets(this.getPossibleTargets(boardLocation, location), enemyBoardLocation);
+  }
+
+  deal(
+    boardLocation: boardLocation,
+    location: Location,
+    enemyBoardLocation: boardLocation | undefined = undefined,
+  ): Unit[] {
+    return this.DealerType.deal(this, this.getTargets(boardLocation, location, enemyBoardLocation), location);
   }
 
   getName(): string {
@@ -27,7 +59,19 @@ export class Unit {
     return this.hp;
   }
 
+  getDealValue(): number {
+    return this.dealValue;
+  }
+
   getInitiative(): number {
     return this.initiative;
+  }
+
+  getDealCount(): IDealCount {
+    return this.DealCount;
+  }
+
+  setHp(value: number): void {
+    this.hp = value;
   }
 }

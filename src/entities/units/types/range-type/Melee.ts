@@ -1,9 +1,9 @@
 import { IAttackRange } from './IAttackRange';
-import { boardLocation, Team } from '../../types';
-import { Location } from '../../board';
+import { boardLocation, Team } from '../../../types';
+import { Location } from '../../../board';
 
 export class Melee implements IAttackRange {
-  getPossibleAims(unitBoardLocation: boardLocation, location: Location): boardLocation[] | null {
+  getPossibleTargets(unitBoardLocation: boardLocation, location: Location): boardLocation[] {
     const adjacentEnemiesLocation = location.getAdjacentEnemiesLocation(unitBoardLocation);
 
     if (adjacentEnemiesLocation.length) {

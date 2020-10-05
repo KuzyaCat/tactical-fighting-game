@@ -1,5 +1,4 @@
-import { Unit } from '../units';
-import { unit } from '../types';
+import { unit, boardLocation } from '../types';
 
 export class Board {
   private boardMatrix: Array<Array<unit>>;
@@ -11,6 +10,10 @@ export class Board {
 
   getBoardMatrix(): unit[][] {
     return this.boardMatrix;
+  }
+
+  setUnit(boardLocation: boardLocation, unit: unit): void {
+    this.boardMatrix[boardLocation.rowIndex][boardLocation.columnIndex] = unit;
   }
 
   fillWithUnits(unitsMatrix: unit[][]): void {
