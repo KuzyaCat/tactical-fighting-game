@@ -84,4 +84,8 @@ export class Unit {
   setHp(value: number): void {
     this.hp = value;
   }
+
+  setInitiative(value: number): void {
+    this.initiative = value;
+  }
 }

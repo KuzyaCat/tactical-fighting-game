@@ -5,6 +5,7 @@ import { RangeCreep } from './units/RangeCreep';
 import { Mage } from './units/Mage';
 import { Druid } from './units/Druid';
 import { HealerCreep } from './units/HealerCreep';
+import { ParalyzerCreep } from './units/ParalyzerCreep';
 import { boardLocation, unit } from './types';
 
 export class Game {
@@ -283,6 +284,40 @@ export class Game {
     if (healer) {
       action.deal(healer as Unit, [allyLocation]);
     }
+    console.log(board.getBoardMatrix());
+
+    return JSON.stringify(board.getBoardMatrix());
+  }
+
+  static case9(rowsCount: number, columnsCount: number): string {
+    const board = new Board(rowsCount, columnsCount);
+    const location: Location = new Location(board);
+    const action: Action = new Action(location, board);
+
+    const units: (Unit | null)[][] = Array<Array<Unit>>(rowsCount);
+    for (let i = 0; i < rowsCount; i += 1) {
+      const unitsRow = Array<Unit>(columnsCount);
+      if (i === 0) {
+        for (let j = 0; j < columnsCount; j += 1) {
+          unitsRow[j] = new ParalyzerCreep('kek', 100, 20, 20);
+          units[i] = unitsRow;
+        }
+        continue;
+      }
+      for (let j = 0; j < columnsCount; j += 1) {
+        unitsRow[j] = new Creep('kek', 100, 20, 20);
+      }
+      units[i] = unitsRow;
+    }
+    board.fillWithUnits(units);
+
+    const enemyBoardLocation = {
+      rowIndex: 2,
+      columnIndex: 1,
+    };
+
+    console.log(board.getBoardMatrix());
+    action.deal(units[0][1] as Unit, [enemyBoardLocation]);
     console.log(board.getBoardMatrix());
 
     return JSON.stringify(board.getBoardMatrix());
