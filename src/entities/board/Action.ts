@@ -29,7 +29,7 @@ export class Action {
   deal(unit: Unit, enemiesBoardLocations: boardLocation[]): void {
     const unitBoardLocation = this.location.getUnitBoardLocation(unit);
     if (unitBoardLocation && unit.getDealCount() instanceof SingleTarget) {
-      enemiesBoardLocations.forEach((e) => unit.deal(unitBoardLocation, this.location, e));
+      unit.deal(unitBoardLocation, this.location, enemiesBoardLocations[0]);
     } else if (unitBoardLocation && unit.getDealCount() instanceof MassTarget) {
       unit.deal(unitBoardLocation, this.location);
     }

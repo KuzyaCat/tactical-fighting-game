@@ -2,6 +2,7 @@ import { Board, Location, Action } from './board';
 import { Unit } from './units';
 import { Creep } from './units/Creep';
 import { RangeCreep } from './units/RangeCreep';
+import { Mage } from './units/Mage';
 import { boardLocation } from './types';
 
 export class Game {
@@ -145,7 +146,44 @@ export class Game {
 
     console.log(board.getBoardMatrix());
     for (let i = 0; i < 5; i += 1) {
-      action.deal(units[1][1] as Unit, [enemyBoardLocation]);
+      action.deal(units[0][1] as Unit, [enemyBoardLocation]);
+    }
+    console.log(board.getBoardMatrix());
+
+    return JSON.stringify(board.getBoardMatrix());
+  }
+
+  static case6(rowsCount: number, columnsCount: number): string {
+    const board = new Board(rowsCount, columnsCount);
+    const location: Location = new Location(board);
+    const action: Action = new Action(location, board);
+
+    const units: (Unit | null)[][] = Array<Array<Unit>>(rowsCount);
+    for (let i = 0; i < rowsCount; i += 1) {
+      const unitsRow = Array<Unit>(columnsCount);
+      if (i === 0) {
+        for (let j = 0; j < columnsCount; j += 1) {
+          unitsRow[j] = new RangeCreep('kek', 100, 20, 20);
+          units[i] = unitsRow;
+        }
+        continue;
+      }
+      for (let j = 0; j < columnsCount; j += 1) {
+        unitsRow[j] = new Creep('kek', 100, 20, 20);
+      }
+      units[i] = unitsRow;
+    }
+    units[0][2] = new Mage('kek', 100, 40, 40);
+    units[2][2] = null;
+    board.fillWithUnits(units);
+
+    const attacker = units[0][2];
+    console.log(board.getBoardMatrix());
+    if (attacker) {
+      action.deal(
+        attacker as Unit,
+        attacker.getPossibleTargets(location.getUnitBoardLocation(attacker) as boardLocation, location),
+      );
     }
     console.log(board.getBoardMatrix());
 
