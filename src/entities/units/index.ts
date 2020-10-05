@@ -6,4 +6,6 @@ export { ElfArcher } from './ElfArcher';
 export { SkeletonMage } from './SkeletonMage';
 export { Archimage } from './Archimage';
 export { Monk } from './Monk';
+export { Bishop } from './Bishop';
+export { Sirena } from './Sirena';
 export { SingleTarget, MassTarget } from './types';
