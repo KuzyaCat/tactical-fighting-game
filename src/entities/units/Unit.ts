@@ -1,7 +1,7 @@
 import { IAttackRange } from './types/range-type/IAttackRange';
 import { IDealCount } from './types/deal-count/IDealCount';
 import { IDealerType } from './types/deal-type/IDealerType';
-import { boardLocation } from '../types';
+import { boardLocation } from '../../types';
 import { Location } from '../board';
 
 export class Unit {
@@ -11,6 +11,7 @@ export class Unit {
   private initiative: number;
   private originInitiative: number;
   private dealValue: number;
+  private isDefending: boolean;
   private AttackRangeType: IAttackRange;
   private DealCount: IDealCount;
   private DealerType: IDealerType;
@@ -30,6 +31,7 @@ export class Unit {
     this.originInitiative = initiative;
     this.name = name;
     this.dealValue = dealValue;
+    this.isDefending = false;
     this.AttackRangeType = AttackRangeType;
     this.DealCount = DealCount;
     this.DealerType = DealerType;
@@ -79,6 +81,10 @@ export class Unit {
     return this.originInitiative;
   }
 
+  getIsDefending(): boolean {
+    return this.isDefending;
+  }
+
   getDealCount(): IDealCount {
     return this.DealCount;
   }
@@ -93,5 +99,9 @@ export class Unit {
 
   setInitiative(value: number): void {
     this.initiative = value;
+  }
+
+  setIsDefending(value: boolean): void {
+    this.isDefending = value;
   }
 }

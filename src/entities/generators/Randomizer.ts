@@ -26,7 +26,7 @@ export class Randomizer {
   }
 
   generateIndex(): number {
-    return Math.floor(Math.random() * (this.uniqueUnitList.length - 1));
+    return Math.floor(Math.random() * this.uniqueUnitList.length);
   }
 
   generateUnit(): Unit {

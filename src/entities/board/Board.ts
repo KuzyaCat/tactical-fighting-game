@@ -1,4 +1,4 @@
-import { unit, boardLocation } from '../types';
+import { unit, boardLocation } from '../../types';
 
 export class Board {
   private boardMatrix: Array<Array<unit>>;

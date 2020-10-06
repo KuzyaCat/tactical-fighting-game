@@ -1,5 +1,5 @@
 import { IDealCount } from './IDealCount';
-import { boardLocation } from '../../../types';
+import { boardLocation } from '../../../../types';
 
 export class SingleTarget implements IDealCount {
   getTargets(possibleTargets: boardLocation[], targetLocation: boardLocation | undefined): boardLocation[] {

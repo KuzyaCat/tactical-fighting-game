@@ -1,0 +1,17 @@
+.unit-deal-value-container {
+  position: relative;
+  margin-right: -15px;
+}
+
+.unit-deal-value-container img {
+  width: 60px;
+  height: 60px;
+}
+
+.unit-deal-value-container span {
+  font-size: 0.5em;
+  color: #fff;
+  position: absolute;
+  top: 15%;
+  left: 13%;
+}

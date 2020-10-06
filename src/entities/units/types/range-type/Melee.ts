@@ -1,5 +1,5 @@
 import { IAttackRange } from './IAttackRange';
-import { boardLocation, Team } from '../../../types';
+import { boardLocation, Team } from '../../../../types';
 import { Location } from '../../../board';
 
 export class Melee implements IAttackRange {

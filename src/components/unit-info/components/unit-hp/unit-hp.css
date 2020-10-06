@@ -1,0 +1,17 @@
+.unit-hp-container {
+  position: relative;
+  width: 40px;
+  height: 40px;
+}
+
+.unit-hp-container img {
+  width: inherit;
+  height: inherit;
+}
+
+.unit-hp-container span {
+  color: #fff;
+  position: absolute;
+  top: -7%;
+  left: 3%;
+}

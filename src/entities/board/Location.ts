@@ -1,6 +1,6 @@
 import { Board } from './Board';
 import { Unit } from '../units';
-import { Team, boardLocation, unit } from '../types';
+import { Team, boardLocation, unit } from '../../types';
 
 export class Location {
   private board: Board;

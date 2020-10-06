@@ -1,7 +1,7 @@
 import { IDealerType } from './IDealerType';
 import { Unit } from '../../Unit';
 import { Location } from '../../../board';
-import { boardLocation, unit } from '../../../types';
+import { boardLocation, unit } from '../../../../types';
 
 export class Damager implements IDealerType {
   deal(unit: Unit, enemiesBoardLocations: boardLocation[], location: Location): Unit[] {
@@ -9,7 +9,10 @@ export class Damager implements IDealerType {
     enemiesBoardLocations.forEach((enemyBoardLocation) => {
       const enemy: unit = location.getUnitByLocation(enemyBoardLocation);
       if (enemy) {
-        enemy.setHp(enemy.getHp() - unit.getDealValue());
+        const restHp = enemy.getIsDefending()
+          ? 0.5 * (enemy.getHp() - unit.getDealValue())
+          : enemy.getHp() - unit.getDealValue();
+        enemy.setHp(restHp);
         damagedUnits.push(enemy);
       }
     });

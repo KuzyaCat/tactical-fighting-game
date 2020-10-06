@@ -1,0 +1,6 @@
+.unit-item {
+  width: 220px;
+  height: 220px;
+  border: 1px solid #000;
+  box-sizing: border-box;
+}

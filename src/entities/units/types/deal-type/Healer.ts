@@ -1,7 +1,7 @@
 import { IDealerType } from './IDealerType';
 import { Unit } from '../../Unit';
 import { Location } from '../../../board';
-import { boardLocation, unit } from '../../../types';
+import { boardLocation, unit } from '../../../../types';
 
 export class Healer implements IDealerType {
   deal(unit: Unit, unitsBoardLocations: boardLocation[], location: Location): Unit[] {

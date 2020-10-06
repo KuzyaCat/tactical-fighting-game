@@ -1,5 +1,5 @@
 import { IAttackRange } from './IAttackRange';
-import { boardLocation } from '../../../types';
+import { boardLocation } from '../../../../types';
 import { Location } from '../../../board';
 import { Healer } from '../deal-type/Healer';
 

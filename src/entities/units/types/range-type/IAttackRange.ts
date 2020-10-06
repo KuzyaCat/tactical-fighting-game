@@ -1,4 +1,4 @@
-import { boardLocation } from '../../../types';
+import { boardLocation } from '../../../../types';
 import { Location } from '../../../board';
 
 export interface IAttackRange {
