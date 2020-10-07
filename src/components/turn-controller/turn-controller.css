@@ -1,0 +1,15 @@
+.turn-controller {
+  margin-top: auto;
+  margin-bottom: 20px;
+}
+
+.turn-controller button {
+  width: 100px;
+  height: 50px;
+  border: 1px solid #000;
+  outline: none;
+}
+
+.turn-controller button:hover {
+  cursor: pointer;
+}

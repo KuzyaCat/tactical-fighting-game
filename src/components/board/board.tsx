@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 
-import { unit } from '../../types';
+import { boardLocation, unit } from '../../types';
 import { Unit } from '../../entities/units';
 import { UnitItem } from '../unit-item';
 import './board.css';
@@ -8,6 +8,8 @@ import './board.css';
 interface IBoardProps {
   initialUnits: unit[][];
   units: unit[][];
+  toSelectTarget: boolean;
+  handleSelectTarger: (unitBoardLocation: boardLocation) => void;
 }
 
 export const Board = ({ initialUnits, units }: IBoardProps): ReactElement => (
