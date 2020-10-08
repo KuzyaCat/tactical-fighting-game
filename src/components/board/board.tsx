@@ -41,6 +41,7 @@ export const Board = ({
                 key={columnIndex}
                 unit={unit as Unit}
                 isDead={Boolean(!units[rowIndex][columnIndex])}
+                isDefending={Boolean(unit?.getIsDefending())}
                 isCurrent={unit === currentUnit}
                 isTarget={
                   toSelectTarget && possibleTargets?.findIndex((u) => u === units[rowIndex][columnIndex]) !== -1

@@ -27,6 +27,12 @@ function App(): ReactElement {
     setCurrentUnit(turnGenerator?.next());
   }
 
+  function handleDefense(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const result = action?.doAction(ActionType.defense, currentUnit as Unit);
+    setCurrentUnit(turnGenerator?.next());
+  }
+
   useEffect(() => {
     const initialGameData = Game.start(ROWS_COUNT, COLUMNS_COUNT);
     setUnits(initialGameData.units);
@@ -59,6 +65,7 @@ function App(): ReactElement {
         toSelectTarget={toSelectTarget}
         setToSelectTarget={setToSelectTarget}
         currentUnit={currentUnit as Unit}
+        handleDefense={handleDefense}
       />
     </div>
   );

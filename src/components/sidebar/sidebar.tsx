@@ -1,4 +1,4 @@
-import React, { Dispatch, ReactElement, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, ReactElement, SetStateAction } from 'react';
 
 import { turnGenerator } from '../../types';
 import { Unit } from '../../entities/units';
@@ -11,6 +11,7 @@ interface ISidebarProps {
   toSelectTarget: boolean;
   setToSelectTarget: Dispatch<SetStateAction<boolean>>;
   currentUnit: Unit;
+  handleDefense: () => void;
 }
 
 export const Sidebar = ({
@@ -18,6 +19,7 @@ export const Sidebar = ({
   setToSelectTarget,
   currentUnit,
   turnGenerator,
+  handleDefense,
 }: ISidebarProps): ReactElement | null => {
   if (!currentUnit) {
     return null;
@@ -26,7 +28,11 @@ export const Sidebar = ({
   return (
     <div className="sidebar">
       <Order currentUnit={(currentUnit as unknown) as Unit} unitSequence={turnGenerator.getUnitSequence()} />
-      <TurnController toSelectTarget={toSelectTarget} setToSelectTarget={setToSelectTarget} />
+      <TurnController
+        toSelectTarget={toSelectTarget}
+        setToSelectTarget={setToSelectTarget}
+        handleDefense={handleDefense}
+      />
     </div>
   );
 };

@@ -9,12 +9,20 @@ import './unit-item.css';
 interface IUnitItemProps {
   unit: Unit;
   isDead: boolean;
+  isDefending: boolean;
   isCurrent: boolean;
   isTarget: boolean;
   handleSelectTarget: (arg0: Unit) => void;
 }
 
-export const UnitItem = ({ unit, isDead, isCurrent, isTarget, handleSelectTarget }: IUnitItemProps): ReactElement => {
+export const UnitItem = ({
+  unit,
+  isDead,
+  isDefending,
+  isCurrent,
+  isTarget,
+  handleSelectTarget,
+}: IUnitItemProps): ReactElement => {
   return (
     <div
       className={cn({
@@ -24,7 +32,7 @@ export const UnitItem = ({ unit, isDead, isCurrent, isTarget, handleSelectTarget
       })}
       onClick={() => handleSelectTarget(unit)}
     >
-      <UnitImage name={unit.getName()} isDead={isDead} />
+      <UnitImage name={unit.getName()} isDead={isDead} isDefending={isDefending} />
       <UnitInfo
         name={unit.getName()}
         hp={unit.getHp()}
