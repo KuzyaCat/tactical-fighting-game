@@ -20,12 +20,13 @@ export class Game {
     board.fillWithUnits(randomizer.generateFullBoardUnits(rowsCount, columnsCount));
     this.location = new Location(board);
     this.units = board.getBoardMatrix();
-    this.turnGenerator = new TurnGenerator(this.units as Unit[][], randomizer);
+    const initialUnits = [...this.units.map((u) => [...u])];
+    this.turnGenerator = new TurnGenerator(initialUnits as Unit[][], randomizer);
     const action = new Action(this.location, board, this.turnGenerator);
 
     return {
       units: this.units,
-      turnGenerator: new TurnGenerator(this.units as Unit[][], randomizer),
+      turnGenerator: this.turnGenerator,
       action,
     };
   }

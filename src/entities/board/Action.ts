@@ -17,13 +17,14 @@ export class Action {
   }
 
   doAction(action: ActionType, unit: Unit): void | ((targetEnemyBoardLocation: boardLocation) => void) {
-    this.turnGenerator.next();
-
     switch (action) {
       case ActionType.deal:
-        return this.deal(unit);
+        const res = this.deal(unit);
+        this.turnGenerator.next();
+        return res;
       case ActionType.defense:
         this.defense(unit);
+        this.turnGenerator.next();
         break;
       default:
         throw new Error('There is no such an action');

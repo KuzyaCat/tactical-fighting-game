@@ -16,6 +16,7 @@ function App(): ReactElement {
   const [action, setAction] = useState<action>();
   const [toSelectTarget, setToSelectTarget] = useState<boolean>(false);
   const [currentUnit, setCurrentUnit] = useState<Unit>();
+  const [turnsCount, setTurnsCount] = useState<number>(1);
 
   function handleSelectTarget(unit: Unit): void {
     const dealAction = action?.doAction(ActionType.deal, turnGenerator?.getCurrentUnit() as Unit);
@@ -24,13 +25,13 @@ function App(): ReactElement {
       dealAction(unitBoardLocation);
     }
     setToSelectTarget(false);
-    setCurrentUnit(turnGenerator?.next());
+    setTurnsCount(turnsCount + 1);
   }
 
   function handleDefense(): void {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const result = action?.doAction(ActionType.defense, currentUnit as Unit);
-    setCurrentUnit(turnGenerator?.next());
+    const defendingAction = action?.doAction(ActionType.defense, currentUnit as Unit);
+    setTurnsCount(turnsCount + 1);
   }
 
   useEffect(() => {
@@ -44,6 +45,10 @@ function App(): ReactElement {
   useEffect(() => {
     setCurrentUnit(turnGenerator?.next());
   }, [turnGenerator]);
+
+  useEffect(() => {
+    setCurrentUnit(turnGenerator?.getCurrentUnit());
+  }, [turnsCount]);
 
   if (!units) {
     return <div>Loading</div>;

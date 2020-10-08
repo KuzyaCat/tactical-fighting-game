@@ -11,7 +11,6 @@ export class TurnGenerator {
       ...accumulator,
       ...randomizer.shuffleListSequance(currentArray),
     ]);
-    this.unitSequance[2].setInitiative(0);
     this.turn = this.turnGenerator(this.unitSequance);
     this.currentUnit = this.unitSequance[0];
   }
@@ -31,7 +30,9 @@ export class TurnGenerator {
     }
 
     if (this.currentUnit === this.unitSequance[0]) {
-      this.unitSequance.forEach((u) => u.setIsDefending(false));
+      this.unitSequance.forEach((u) => {
+        return u.setIsDefending(false);
+      });
     }
 
     return this.currentUnit;
