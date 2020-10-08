@@ -3,4 +3,13 @@
   height: 220px;
   border: 1px solid #000;
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+.unit-item.current {
+  border: 5px solid green;
+}
+
+.unit-item.target {
+  border: 5px solid blue;
 }

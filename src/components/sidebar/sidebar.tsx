@@ -8,17 +8,17 @@ import './sidebar.css';
 
 interface ISidebarProps {
   turnGenerator: turnGenerator;
+  toSelectTarget: boolean;
   setToSelectTarget: Dispatch<SetStateAction<boolean>>;
+  currentUnit: Unit;
 }
 
-export const Sidebar = ({ turnGenerator }: ISidebarProps): ReactElement | null => {
-  const [currentUnit, setCurrentUnit] = useState<Unit>();
-  const [toNextTurn, setToNextTurn] = useState<boolean>(false);
-
-  useEffect(() => {
-    setCurrentUnit(turnGenerator.next());
-  }, []);
-
+export const Sidebar = ({
+  toSelectTarget,
+  setToSelectTarget,
+  currentUnit,
+  turnGenerator,
+}: ISidebarProps): ReactElement | null => {
   if (!currentUnit) {
     return null;
   }
@@ -26,7 +26,7 @@ export const Sidebar = ({ turnGenerator }: ISidebarProps): ReactElement | null =
   return (
     <div className="sidebar">
       <Order currentUnit={(currentUnit as unknown) as Unit} unitSequence={turnGenerator.getUnitSequence()} />
-      <TurnController toNextTurn={toNextTurn} setToNextTurn={setToNextTurn} />
+      <TurnController toSelectTarget={toSelectTarget} setToSelectTarget={setToSelectTarget} />
     </div>
   );
 };

@@ -20,7 +20,7 @@ export const Order = ({ currentUnit, unitSequence }: IOrderProps): ReactElement 
       setCurrentSequence([
         unitSequence[currentUnitIndexInSequence],
         ...[
-          ...unitSequence.slice(currentUnitIndexInSequence),
+          ...unitSequence.slice(currentUnitIndexInSequence + 1),
           ...unitSequence.slice(0, currentUnitIndexInSequence),
         ].slice(0, UNIT_COUNT_TO_DISPLAY + 1),
       ]);

@@ -3,14 +3,14 @@ import React, { Dispatch, ReactElement, SetStateAction } from 'react';
 import './turn-controller.css';
 
 interface ITurnControllerProps {
-  toNextTurn: boolean;
-  setToNextTurn: Dispatch<SetStateAction<boolean>>;
+  toSelectTarget: boolean;
+  setToSelectTarget: Dispatch<SetStateAction<boolean>>;
 }
 
-export const TurnController = ({ toNextTurn, setToNextTurn }: ITurnControllerProps): ReactElement => {
+export const TurnController = ({ toSelectTarget, setToSelectTarget }: ITurnControllerProps): ReactElement => {
   return (
     <div className="turn-controller">
-      <button>Deal</button>
+      <button onClick={() => setToSelectTarget(!toSelectTarget)}>Deal</button>
       <button>Defense</button>
     </div>
   );

@@ -1,20 +1,10 @@
 import { Unit, Skeleton, Centaur, Bandit, ElfArcher, SkeletonMage, Archimage, Monk, Bishop, Sirena } from '../units';
 
 export class Randomizer {
-  uniqueUnitList: Unit[];
+  uniqueUnitList: typeof Unit[];
 
   constructor() {
-    this.uniqueUnitList = [
-      new Skeleton(),
-      new Centaur(),
-      new Bandit(),
-      new ElfArcher(),
-      new SkeletonMage(),
-      new Archimage(),
-      new Monk(),
-      new Bishop(),
-      new Sirena(),
-    ];
+    this.uniqueUnitList = [Skeleton, Centaur, Bandit, ElfArcher, SkeletonMage, Archimage, Monk, Bishop, Sirena];
   }
 
   shuffleListSequance(unitsList: Unit[]): Unit[] {
@@ -30,7 +20,7 @@ export class Randomizer {
   }
 
   generateUnit(): Unit {
-    return this.uniqueUnitList[this.generateIndex()];
+    return new this.uniqueUnitList[this.generateIndex()]();
   }
 
   generateFullBoardUnits(rowsCount: number, columnsCount: number): Unit[][] {

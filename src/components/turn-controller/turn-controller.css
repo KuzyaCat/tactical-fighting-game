@@ -12,4 +12,5 @@
 
 .turn-controller button:hover {
   cursor: pointer;
+  background-color: gray;
 }

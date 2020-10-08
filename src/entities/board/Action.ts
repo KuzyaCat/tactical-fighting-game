@@ -3,19 +3,22 @@ import { Board } from './Board';
 import { Unit } from '../units';
 import { boardLocation, unit, ActionType } from '../../types';
 import { SingleTarget, MassTarget } from '../units';
-import { act } from 'react-dom/test-utils';
+import { TurnGenerator } from '../generators';
 
 export class Action {
   private location: Location;
   private board: Board;
+  private turnGenerator: TurnGenerator;
 
-  constructor(location: Location, board: Board) {
+  constructor(location: Location, board: Board, turnGenerator: TurnGenerator) {
     this.location = location;
     this.board = board;
+    this.turnGenerator = turnGenerator;
   }
 
   doAction(action: ActionType, unit: Unit): void | ((targetEnemyBoardLocation: boardLocation) => void) {
-    console.log(action);
+    this.turnGenerator.next();
+
     switch (action) {
       case ActionType.deal:
         return this.deal(unit);
@@ -72,5 +75,15 @@ export class Action {
 
   private defense(unit: Unit): void {
     unit.setIsDefending(true);
+  }
+
+  getPossibleTargetsOfUnit(unit: Unit): unit[] {
+    return unit
+      .getPossibleTargets(this.location.getUnitBoardLocation(unit) as boardLocation, this.location)
+      .map((loc) => this.location.getUnitByLocation(loc));
+  }
+
+  getBoardLocationOfTarget(unit: Unit): boardLocation | null {
+    return this.location.getUnitBoardLocation(unit);
   }
 }
