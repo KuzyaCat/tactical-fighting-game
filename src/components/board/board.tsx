@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 
-import { unit, action, turnGenerator } from '../../types';
+import { unit, action } from '../../types';
 import { Unit } from '../../entities/units';
 import { UnitItem } from '../unit-item';
 import './board.css';
@@ -10,7 +10,6 @@ interface IBoardProps {
   units: unit[][];
   toSelectTarget: boolean;
   handleSelectTarget: (unit: Unit) => void;
-  turnGenerator: turnGenerator;
   currentUnit: Unit;
   action: action;
 }

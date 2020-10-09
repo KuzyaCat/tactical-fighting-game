@@ -1,10 +1,6 @@
 import { Unit } from '../entities/units';
 import { TurnGenerator } from '../entities/generators';
 import { Action } from '../entities/board';
-import { IDealerType } from '../entities/units/types/deal-type/IDealerType';
-import { Damager } from '../entities/units/types/deal-type/Damager';
-import { Healer } from '../entities/units/types/deal-type/Healer';
-import { Paralyzer } from '../entities/units/types/deal-type/Paralyzer';
 
 export type boardLocation = {
   rowIndex: number;

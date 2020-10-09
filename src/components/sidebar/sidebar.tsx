@@ -27,7 +27,10 @@ export const Sidebar = ({
 
   return (
     <div className="sidebar">
-      <Order currentUnit={(currentUnit as unknown) as Unit} unitSequence={turnGenerator.getUnitSequence()} />
+      <Order
+        currentUnit={(currentUnit as unknown) as Unit}
+        unitSequence={turnGenerator.getUnitSequence().filter((u) => u)}
+      />
       <TurnController
         toSelectTarget={toSelectTarget}
         setToSelectTarget={setToSelectTarget}

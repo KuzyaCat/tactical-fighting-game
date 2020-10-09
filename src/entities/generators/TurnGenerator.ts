@@ -1,29 +1,33 @@
 import { Randomizer } from './Randomizer';
 import { Unit } from '../units/Unit';
+import { unit } from '../../types';
 
 export class TurnGenerator {
   private unitSequance: Unit[];
   turn: Generator<Unit>;
   private currentUnit: Unit;
 
-  constructor(units: Unit[][], randomizer: Randomizer) {
-    this.unitSequance = this.splitByEqualInitiative(units).reduce((accumulator, currentArray) => [
-      ...accumulator,
-      ...randomizer.shuffleListSequance(currentArray),
-    ]);
-    this.turn = this.turnGenerator(this.unitSequance);
+  constructor(units: unit[][], randomizer: Randomizer) {
+    this.unitSequance = this.splitByEqualInitiative(
+      units.filter((u) => u) as Unit[][],
+    ).reduce((accumulator, currentArray) => [...accumulator, ...randomizer.shuffleListSequance(currentArray)]);
+    this.turn = this.turnGenerator();
     this.currentUnit = this.unitSequance[0];
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  *turnGenerator(sequence: Unit[]) {
+  *turnGenerator() {
     while (true) {
-      yield* sequence;
+      yield* this.unitSequance;
     }
   }
 
   next(): Unit {
     this.currentUnit = this.turn.next().value;
+    while (!this.currentUnit || this.currentUnit.getHp() <= 0) {
+      this.currentUnit = this.turn.next().value;
+    }
+
     if (!this.currentUnit.getInitiative()) {
       this.currentUnit.setInitiative(this.currentUnit.getOriginInitiative());
       return this.turn.next().value;
@@ -39,7 +43,7 @@ export class TurnGenerator {
   }
 
   getUnitSequence(): Unit[] {
-    return this.unitSequance;
+    return this.unitSequance.filter((u) => u && u.getHp() > 0);
   }
 
   getCurrentUnit(): Unit {

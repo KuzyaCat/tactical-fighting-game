@@ -61,7 +61,6 @@ function App(): ReactElement {
         initialUnits={initialUnits as unit[][]}
         toSelectTarget={toSelectTarget}
         handleSelectTarget={handleSelectTarget}
-        turnGenerator={turnGenerator as turnGenerator}
         currentUnit={currentUnit as Unit}
         action={action as action}
       />

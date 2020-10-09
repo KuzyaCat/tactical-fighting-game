@@ -10,7 +10,6 @@ type initialGameData = {
 };
 
 export class Game {
-  static units: unit[][];
   static location: Location;
   static turnGenerator: TurnGenerator;
 
@@ -19,20 +18,19 @@ export class Game {
     const board = new Board(rowsCount, columnsCount);
     board.fillWithUnits(randomizer.generateFullBoardUnits(rowsCount, columnsCount));
     this.location = new Location(board);
-    this.units = board.getBoardMatrix();
-    const initialUnits = [...this.units.map((u) => [...u])];
-    this.turnGenerator = new TurnGenerator(initialUnits as Unit[][], randomizer);
+    const units = board.getBoardMatrix();
+    this.turnGenerator = new TurnGenerator(units, randomizer);
     const action = new Action(this.location, board, this.turnGenerator);
 
     return {
-      units: this.units,
+      units,
       turnGenerator: this.turnGenerator,
       action,
     };
   }
 
   static isFinished(currentUnit: Unit): boolean {
-    return this.location
+    return !this.location
       .getAllEnemiesLocation(this.location.getUnitBoardLocation(currentUnit) as boardLocation)
       .some((enemyLocation) => this.location.isAlive(enemyLocation));
   }

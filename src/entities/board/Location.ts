@@ -37,7 +37,10 @@ export class Location {
   }
 
   getUnitByLocation(boardLocation: boardLocation): unit {
-    return this.board.getBoardMatrix()[boardLocation.rowIndex][boardLocation.columnIndex];
+    if (boardLocation) {
+      return this.board.getBoardMatrix()[boardLocation.rowIndex][boardLocation.columnIndex];
+    }
+    return null;
   }
 
   isAlive(boardLocation: boardLocation): boolean {

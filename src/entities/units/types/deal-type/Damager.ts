@@ -10,7 +10,7 @@ export class Damager implements IDealerType {
       const enemy: unit = location.getUnitByLocation(enemyBoardLocation);
       if (enemy) {
         const restHp = enemy.getIsDefending()
-          ? 0.5 * (enemy.getHp() - unit.getDealValue())
+          ? enemy.getHp() - 0.5 * unit.getDealValue()
           : enemy.getHp() - unit.getDealValue();
         enemy.setHp(restHp);
         damagedUnits.push(enemy);
