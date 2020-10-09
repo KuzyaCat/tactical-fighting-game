@@ -4,9 +4,10 @@ import './App.css';
 import { Board } from './components/board';
 import { Game } from './entities/Game';
 import { MassTarget, Unit } from './entities/units';
-import { unit, turnGenerator, action, ActionType } from './types';
+import { unit, turnGenerator, action, ActionType, Team } from './types';
 import { ROWS_COUNT, COLUMNS_COUNT } from './helpers/constants';
 import { Sidebar } from './components/sidebar';
+import { GameOver } from './components/game-over';
 
 let initialUnits: unit[][] | undefined = undefined;
 
@@ -17,6 +18,7 @@ function App(): ReactElement {
   const [toSelectTarget, setToSelectTarget] = useState<boolean>(false);
   const [currentUnit, setCurrentUnit] = useState<Unit>();
   const [turnsCount, setTurnsCount] = useState<number>(1);
+  const [finish, setFinish] = useState<{ isFinished: boolean; currentTeam: Team }>();
 
   function handleSelectTarget(unit: Unit): void {
     if (currentUnit && action?.getPossibleTargetsOfUnit(currentUnit).findIndex((u) => u === unit) === -1) {
@@ -62,6 +64,9 @@ function App(): ReactElement {
   }, [turnGenerator]);
 
   useEffect(() => {
+    if (currentUnit) {
+      setFinish(Game.finish(currentUnit as Unit));
+    }
     setCurrentUnit(turnGenerator?.getCurrentUnit());
   }, [turnsCount]);
 
@@ -71,22 +76,28 @@ function App(): ReactElement {
 
   return (
     <div className="App">
-      <Board
-        units={units as unit[][]}
-        initialUnits={initialUnits as unit[][]}
-        toSelectTarget={toSelectTarget}
-        handleSelectTarget={handleSelectTarget}
-        currentUnit={currentUnit as Unit}
-        action={action as action}
-      />
-      <Sidebar
-        turnGenerator={turnGenerator as turnGenerator}
-        toSelectTarget={toSelectTarget}
-        setToSelectTarget={setToSelectTarget}
-        currentUnit={currentUnit as Unit}
-        handleDefense={handleDefense}
-        handleDeal={handleDeal}
-      />
+      {finish?.isFinished ? (
+        <GameOver currentTeam={finish?.currentTeam} />
+      ) : (
+        <>
+          <Board
+            units={units as unit[][]}
+            initialUnits={initialUnits as unit[][]}
+            toSelectTarget={toSelectTarget}
+            handleSelectTarget={handleSelectTarget}
+            currentUnit={currentUnit as Unit}
+            action={action as action}
+          />
+          <Sidebar
+            turnGenerator={turnGenerator as turnGenerator}
+            toSelectTarget={toSelectTarget}
+            setToSelectTarget={setToSelectTarget}
+            currentUnit={currentUnit as Unit}
+            handleDefense={handleDefense}
+            handleDeal={handleDeal}
+          />
+        </>
+      )}
     </div>
   );
 }

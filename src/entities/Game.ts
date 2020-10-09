@@ -1,6 +1,6 @@
 import { Board, Location, Action } from './board';
 import { Unit } from './units';
-import { boardLocation, unit } from '../types';
+import { boardLocation, Team, unit } from '../types';
 import { Randomizer, TurnGenerator } from './generators';
 
 type initialGameData = {
@@ -29,9 +29,12 @@ export class Game {
     };
   }
 
-  static isFinished(currentUnit: Unit): boolean {
-    return !this.location
-      .getAllEnemiesLocation(this.location.getUnitBoardLocation(currentUnit) as boardLocation)
-      .some((enemyLocation) => this.location.isAlive(enemyLocation));
+  static finish(currentUnit: Unit): { isFinished: boolean; currentTeam: Team } {
+    return {
+      isFinished: !this.location
+        .getAllEnemiesLocation(this.location.getUnitBoardLocation(currentUnit) as boardLocation)
+        .some((enemyLocation) => this.location.isAlive(enemyLocation)),
+      currentTeam: this.location.getTeamOfUnit(this.location.getUnitBoardLocation(currentUnit) as boardLocation),
+    };
   }
 }
