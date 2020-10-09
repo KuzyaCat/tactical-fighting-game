@@ -19,6 +19,10 @@ function App(): ReactElement {
   const [turnsCount, setTurnsCount] = useState<number>(1);
 
   function handleSelectTarget(unit: Unit): void {
+    if (currentUnit && action?.getPossibleTargetsOfUnit(currentUnit).findIndex((u) => u === unit) === -1) {
+      return;
+    }
+
     const dealAction = action?.doAction(ActionType.deal, turnGenerator?.getCurrentUnit() as Unit);
     const unitBoardLocation = action?.getBoardLocationOfTarget(unit);
     if (typeof dealAction === 'function' && unitBoardLocation) {
