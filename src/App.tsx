@@ -4,7 +4,7 @@ import './App.css';
 import { Board } from './components/board';
 import { Game } from './entities/Game';
 import { MassTarget, Unit } from './entities/units';
-import { unit, turnGenerator, action, ActionType, boardLocation } from './types';
+import { unit, turnGenerator, action, ActionType } from './types';
 import { ROWS_COUNT, COLUMNS_COUNT } from './helpers/constants';
 import { Sidebar } from './components/sidebar';
 
@@ -17,9 +17,6 @@ function App(): ReactElement {
   const [toSelectTarget, setToSelectTarget] = useState<boolean>(false);
   const [currentUnit, setCurrentUnit] = useState<Unit>();
   const [turnsCount, setTurnsCount] = useState<number>(1);
-  const [singleTargetDealAction, setSingleTargetDealAction] = useState<
-    (targetEnemyBoardLocation: boardLocation) => void
-  >();
 
   function handleSelectTarget(unit: Unit): void {
     if (currentUnit && action?.getPossibleTargetsOfUnit(currentUnit).findIndex((u) => u === unit) === -1) {
@@ -29,7 +26,6 @@ function App(): ReactElement {
     const dealAction = action?.doAction(ActionType.deal, currentUnit as Unit);
     const unitBoardLocation = action?.getBoardLocationOfTarget(unit);
     if (typeof dealAction === 'function' && unitBoardLocation) {
-      console.log('deal boy');
       dealAction(unitBoardLocation);
     }
     setToSelectTarget(false);
@@ -39,6 +35,7 @@ function App(): ReactElement {
   function handleDeal(): void {
     setToSelectTarget(!toSelectTarget);
     if (currentUnit?.getDealCount() instanceof MassTarget) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const dealAction = action?.doAction(ActionType.deal, currentUnit as Unit);
       setToSelectTarget(false);
       setTurnsCount(turnsCount + 1);

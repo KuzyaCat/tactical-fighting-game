@@ -20,10 +20,8 @@ export class Action {
     switch (action) {
       case ActionType.deal:
         const res = this.deal(unit);
-        console.log('res', res);
         this.turnGenerator.next();
         if (!(unit.getDealCount() instanceof MassTarget)) {
-          console.log('not mass target');
           return res;
         }
         break;

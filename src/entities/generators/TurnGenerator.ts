@@ -22,28 +22,35 @@ export class TurnGenerator {
     }
   }
 
+  private skipCurrentUnit(): boolean {
+    return !this.currentUnit || this.currentUnit.getHp() <= 0 || this.currentUnit.getInitiative() <= 0;
+  }
+
+  private getFilterCondition(u: Unit): boolean {
+    return u && u.getHp() > 0 && u.getInitiative() > 0;
+  }
+
   next(): Unit {
     this.currentUnit = this.turn.next().value;
-    while (!this.currentUnit || this.currentUnit.getHp() <= 0) {
+
+    if (this.currentUnit === this.unitSequance[0]) {
+      this.clearEffects();
+    }
+
+    while (this.currentUnit.getInitiative() <= 0) {
+      this.clearCurrentUnitParalyzation();
       this.currentUnit = this.turn.next().value;
     }
 
-    if (!this.currentUnit.getInitiative()) {
-      this.currentUnit.setInitiative(this.currentUnit.getOriginInitiative());
-      return this.turn.next().value;
-    }
-
-    if (this.currentUnit === this.unitSequance[0]) {
-      this.unitSequance.forEach((u) => {
-        return u.setIsDefending(false);
-      });
+    while (this.skipCurrentUnit()) {
+      this.currentUnit = this.turn.next().value;
     }
 
     return this.currentUnit;
   }
 
   getUnitSequence(): Unit[] {
-    return this.unitSequance.filter((u) => u && u.getHp() > 0);
+    return this.unitSequance.filter((u) => this.getFilterCondition(u));
   }
 
   getCurrentUnit(): Unit {
@@ -70,6 +77,18 @@ export class TurnGenerator {
     }
 
     return splitedByEqualInitiativeArrays;
+  }
+
+  private clearCurrentUnitParalyzation(): void {
+    this.currentUnit.setInitiative(this.currentUnit.getOriginInitiative());
+  }
+
+  private clearEffects(): void {
+    this.unitSequance
+      .filter((u) => u && u.getHp() > 0)
+      .forEach((u) => {
+        u.setIsDefending(false);
+      });
   }
 
   private fromMatrixToSortedByInitiativeList(units: Unit[][]) {
