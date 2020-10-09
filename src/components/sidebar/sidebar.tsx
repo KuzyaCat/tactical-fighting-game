@@ -12,6 +12,7 @@ interface ISidebarProps {
   setToSelectTarget: Dispatch<SetStateAction<boolean>>;
   currentUnit: Unit;
   handleDefense: () => void;
+  handleDeal: () => void;
 }
 
 export const Sidebar = ({
@@ -20,6 +21,7 @@ export const Sidebar = ({
   currentUnit,
   turnGenerator,
   handleDefense,
+  handleDeal,
 }: ISidebarProps): ReactElement | null => {
   if (!currentUnit) {
     return null;
@@ -35,6 +37,7 @@ export const Sidebar = ({
         toSelectTarget={toSelectTarget}
         setToSelectTarget={setToSelectTarget}
         handleDefense={handleDefense}
+        handleDeal={handleDeal}
       />
     </div>
   );

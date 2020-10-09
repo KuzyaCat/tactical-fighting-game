@@ -3,8 +3,8 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import './App.css';
 import { Board } from './components/board';
 import { Game } from './entities/Game';
-import { Unit } from './entities/units';
-import { unit, turnGenerator, action, ActionType } from './types';
+import { MassTarget, Unit } from './entities/units';
+import { unit, turnGenerator, action, ActionType, boardLocation } from './types';
 import { ROWS_COUNT, COLUMNS_COUNT } from './helpers/constants';
 import { Sidebar } from './components/sidebar';
 
@@ -17,25 +17,39 @@ function App(): ReactElement {
   const [toSelectTarget, setToSelectTarget] = useState<boolean>(false);
   const [currentUnit, setCurrentUnit] = useState<Unit>();
   const [turnsCount, setTurnsCount] = useState<number>(1);
+  const [singleTargetDealAction, setSingleTargetDealAction] = useState<
+    (targetEnemyBoardLocation: boardLocation) => void
+  >();
 
   function handleSelectTarget(unit: Unit): void {
     if (currentUnit && action?.getPossibleTargetsOfUnit(currentUnit).findIndex((u) => u === unit) === -1) {
       return;
     }
 
-    const dealAction = action?.doAction(ActionType.deal, turnGenerator?.getCurrentUnit() as Unit);
+    const dealAction = action?.doAction(ActionType.deal, currentUnit as Unit);
     const unitBoardLocation = action?.getBoardLocationOfTarget(unit);
     if (typeof dealAction === 'function' && unitBoardLocation) {
+      console.log('deal boy');
       dealAction(unitBoardLocation);
     }
     setToSelectTarget(false);
     setTurnsCount(turnsCount + 1);
   }
 
+  function handleDeal(): void {
+    setToSelectTarget(!toSelectTarget);
+    if (currentUnit?.getDealCount() instanceof MassTarget) {
+      const dealAction = action?.doAction(ActionType.deal, currentUnit as Unit);
+      setToSelectTarget(false);
+      setTurnsCount(turnsCount + 1);
+    }
+  }
+
   function handleDefense(): void {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const defendingAction = action?.doAction(ActionType.defense, currentUnit as Unit);
     setTurnsCount(turnsCount + 1);
+    setToSelectTarget(false);
   }
 
   useEffect(() => {
@@ -74,6 +88,7 @@ function App(): ReactElement {
         setToSelectTarget={setToSelectTarget}
         currentUnit={currentUnit as Unit}
         handleDefense={handleDefense}
+        handleDeal={handleDeal}
       />
     </div>
   );
