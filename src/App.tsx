@@ -19,6 +19,12 @@ function App(): ReactElement {
   const [currentUnit, setCurrentUnit] = useState<Unit>();
   const [turnsCount, setTurnsCount] = useState<number>(1);
   const [finish, setFinish] = useState<{ isFinished: boolean; currentTeam: Team }>();
+  const [toStartNewGame, setToStartNewGame] = useState<boolean>(false);
+
+  function handleNewGame(): void {
+    setToStartNewGame(!toStartNewGame);
+    setFinish(Game.finish(currentUnit as Unit));
+  }
 
   function handleSelectTarget(unit: Unit): void {
     if (currentUnit && action?.getPossibleTargetsOfUnit(currentUnit).findIndex((u) => u === unit) === -1) {
@@ -55,7 +61,7 @@ function App(): ReactElement {
     setTurnGenerator(initialGameData.turnGenerator);
     setAction(initialGameData.action);
     initialUnits = [...initialGameData.units.map((u) => [...u])];
-  }, []);
+  }, [toStartNewGame]);
 
   useEffect(() => {
     setCurrentUnit(turnGenerator?.next());
@@ -75,7 +81,7 @@ function App(): ReactElement {
   return (
     <div className="App">
       {finish?.isFinished ? (
-        <GameOver currentTeam={finish?.currentTeam} />
+        <GameOver currentTeam={finish?.currentTeam} handleNewGame={handleNewGame} />
       ) : (
         <>
           <Board

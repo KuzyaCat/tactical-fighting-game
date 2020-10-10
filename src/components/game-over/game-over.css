@@ -7,6 +7,15 @@
   margin: auto auto;
 }
 
+.game-over-container button {
+  width: 100px;
+  height: 50px;
+  outline: none;
+  cursor: pointer;
+  border: 1px solid #000;
+  margin-top: 30px;
+}
+
 .team-name {
   color: blue;
 }
