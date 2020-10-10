@@ -16,8 +16,8 @@ export const UnitImage = ({ name, isDead, isDefending }: IUnitImageProps): React
   return (
     <div className="unit-image-container">
       <UnitImageComponent />
+      {isDefending && !isDead && <img alt="defending" src={`${ICONS_PATH}/shield.svg`} className="status" />}
       {isDead && <img alt="dead" src={`${ICONS_PATH}/skull.svg`} className="status" />}
-      {isDefending && <img alt="defending" src={`${ICONS_PATH}/shield.svg`} className="status" />}
     </div>
   );
 };

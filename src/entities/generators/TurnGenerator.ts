@@ -33,17 +33,17 @@ export class TurnGenerator {
   next(): Unit {
     this.currentUnit = this.turn.next().value;
 
-    if (this.currentUnit === this.unitSequance[0]) {
-      this.clearEffects();
-    }
-
-    while (this.currentUnit.getInitiative() <= 0) {
+    while (this.currentUnit?.getInitiative() <= 0) {
       this.clearCurrentUnitParalyzation();
       this.currentUnit = this.turn.next().value;
     }
 
     while (this.skipCurrentUnit()) {
       this.currentUnit = this.turn.next().value;
+    }
+
+    if (this.currentUnit === this.unitSequance.filter(this.getFilterCondition)[0]) {
+      this.clearEffects();
     }
 
     return this.currentUnit;

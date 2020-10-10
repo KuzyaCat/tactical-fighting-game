@@ -4,7 +4,7 @@ import './App.css';
 import { Board } from './components/board';
 import { Game } from './entities/Game';
 import { MassTarget, Unit } from './entities/units';
-import { unit, turnGenerator, action, ActionType, Team } from './types';
+import { unit, turnGenerator, action, ActionType, Team, boardLocation } from './types';
 import { ROWS_COUNT, COLUMNS_COUNT } from './helpers/constants';
 import { Sidebar } from './components/sidebar';
 import { GameOver } from './components/game-over';
@@ -25,11 +25,9 @@ function App(): ReactElement {
       return;
     }
 
-    const dealAction = action?.doAction(ActionType.deal, currentUnit as Unit);
     const unitBoardLocation = action?.getBoardLocationOfTarget(unit);
-    if (typeof dealAction === 'function' && unitBoardLocation) {
-      dealAction(unitBoardLocation);
-    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const dealAction = action?.doAction(ActionType.deal, currentUnit as Unit, unitBoardLocation as boardLocation);
     setToSelectTarget(false);
     setTurnsCount(turnsCount + 1);
   }

@@ -106,7 +106,7 @@ export class Location {
   private getRowEnemiesLocation(rowIndex: number): (boardLocation | null)[] {
     return this.board
       .getBoardMatrix()
-      [rowIndex].filter((u) => u)
+      [rowIndex].filter((u) => u && u.getHp() > 0)
       .map((u) => {
         const unitBoardLocation = this.getUnitBoardLocation(u as Unit);
         if (unitBoardLocation) {
@@ -137,7 +137,7 @@ export class Location {
 
     if (teamOfUnit === Team.bottomTeam) {
       for (let i = rowsHalfIndex - 1; i >= 0; i -= 1) {
-        if (matrix[i].length) {
+        if (matrix[i].filter((u) => u).length) {
           return this.getRowEnemiesLocation(i).filter(this.removeDeadUnits);
         }
       }

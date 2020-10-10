@@ -16,14 +16,18 @@ export class Action {
     this.turnGenerator = turnGenerator;
   }
 
-  doAction(action: ActionType, unit: Unit): void | ((targetEnemyBoardLocation: boardLocation) => void) {
+  doAction(
+    action: ActionType,
+    unit: Unit,
+    targetBoardLocation?: boardLocation,
+  ): void | ((targetEnemyBoardLocation: boardLocation) => void) {
     switch (action) {
       case ActionType.deal:
-        const res = this.deal(unit);
-        this.turnGenerator.next();
-        if (!(unit.getDealCount() instanceof MassTarget)) {
-          return res;
+        const dealAction = this.deal(unit);
+        if (!(unit.getDealCount() instanceof MassTarget) && dealAction && targetBoardLocation) {
+          const dealSingleTarget = dealAction(targetBoardLocation);
         }
+        this.turnGenerator.next();
         break;
       case ActionType.defense:
         this.defense(unit);
