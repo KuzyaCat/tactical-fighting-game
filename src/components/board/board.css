@@ -1,0 +1,17 @@
+.board-container {
+  width: fit-content;
+  margin: auto auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.board-row {
+  width: inherit;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+}
+
+.board-row:nth-child(2) {
+  margin-bottom: 20px;
+}
