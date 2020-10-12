@@ -1,7 +1,7 @@
 import { IAttackRange } from './types/range-type/IAttackRange';
 import { IDealCount } from './types/deal-count/IDealCount';
 import { IDealerType } from './types/deal-type/IDealerType';
-import { boardLocation,  } from '../../types';
+import { boardLocation } from '../../types';
 import { Melee, SingleTarget, Damager } from './types';
 
 import { Location } from '../board';

@@ -25,7 +25,7 @@ export class Action {
       case ActionType.deal:
         const dealAction = this.deal(unit);
         if (!(unit.getDealCount() instanceof MassTarget) && dealAction && targetBoardLocation) {
-          const dealSingleTarget = dealAction(targetBoardLocation);
+          dealAction(targetBoardLocation);
         }
         this.turnGenerator.next();
         break;

@@ -12,22 +12,14 @@ export class Melee implements IAttackRange {
 
     const unitTeam: Team | null = location.getTeamOfUnit(unitBoardLocation);
     if (unitTeam && unitTeam === location.getTeamOfNextLine(unitBoardLocation)) {
-      console.log('unitTeam && unitTeam === location.getTeamOfNextLine(unitBoardLocation)');
       return [];
     }
 
     const nearestLineEnemiesLocation: boardLocation[] | null = location.getNearestLineEnemiesLocation(
       unitBoardLocation,
     );
-    console.log(
-      'current unit board location',
-      unitBoardLocation,
-      'location.getNearestLineEnemiesLocation(unitBoardLocation)',
-      location.getNearestLineEnemiesLocation(unitBoardLocation),
-    );
-    console.log('nearestLineEnemiesLocation', nearestLineEnemiesLocation);
+
     if (nearestLineEnemiesLocation) {
-      console.log('return nearestLineEnemiesLocation');
       return nearestLineEnemiesLocation;
     }
 
